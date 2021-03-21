@@ -15,7 +15,7 @@ database: 'work_db',
 });
 //creating the IF error 
 connection.connect((err)=>{
-    if (err) thow err;
+    if (err) throw err;
     runSearch();
 });
 
@@ -31,19 +31,35 @@ inquirer
         'View all Employees by departments',
         'View all employees by manager',
   //do i add the add/remove/update role/ update management here??
-
-    ]
+            ]
 })
+
+
 .then((answer)=> {
 switch (answer.action){
-    case'View all Employees'
+    case 'View all Employees':
+    employeeSearch();
+    break;
+    
+    case 'View all Employees by Departments':
+     employeeDepartmentSearch();
+     break;
+     
+     case 'View all Employees by manager':
+     employeeByManagerSearch();
+    break;
+//to exit 
+    case 'EXIT':
+    connection.end();
+    break;
+//if the input is not part of the .then answer.action  it will be invalid.    
+    default:
+    console.log(`Opps.. Invalid option: ${answer.action}`);
+    break;
 }
+});
+}; 
 
-
-
-}
-)
-
-
-} 
+// now we do the methods for each action
+//the first is to ADD DEPARTMENT, ROLES AND EMPLOYEES
 
